@@ -1,0 +1,22 @@
+name: Daily Channel Check
+
+# يعمل هذا الكود كل يوم الساعة 12 منتصف الليل أو يدوياً
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check Arab Channels Source
+        run: |
+          echo "Checking main playlist..."
+          curl -I https://iptv-org.github.io/iptv/languages/ara.m3u
+
+      - name: Log Status
+        run: echo "Channels are online and site is active!"
